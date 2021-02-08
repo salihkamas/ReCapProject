@@ -7,11 +7,11 @@
 
 ## Layers
 ### 1. Entities
-    + Entities Katmanında proje boyunca kullanacağımız nesneler bulunuyor.Şimdilik Car,Color ve Brand nesneleri bulunmaktadır.
++ Entities Katmanında proje boyunca kullanacağımız nesneler bulunuyor.Şimdilik Car,Color ve Brand nesneleri bulunmaktadır.
         1. **Abstract**
         2. **Concrete**
-            1. *Car.cs*
-            2. *Color.cs*
-            3. *Brand.cs*
+            1. Car.cs
+            2. Color.cs
+            3. Brand.cs
 
 
