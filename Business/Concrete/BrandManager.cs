@@ -18,14 +18,7 @@ namespace Business.Concrete
 
         public void Add(Brand brand)
         {
-            if (brand.BrandName.Length >= 2)
-            {
                 _brandDal.Add(brand);
-            }
-            else
-            {
-                Console.WriteLine("Marka ismi 2 harften az olamaz.");
-            }
         }
 
         public void Delete(Brand brand)
@@ -45,14 +38,7 @@ namespace Business.Concrete
 
         public void Update(Brand brand)
         {
-            if (brand.BrandName.Length >= 2)
-            {
                 _brandDal.Update(brand);
-            }
-            else
-            {
-                Console.WriteLine("Marka ismi 2 harften az olamaz.");
-            }
         }
     }
 }

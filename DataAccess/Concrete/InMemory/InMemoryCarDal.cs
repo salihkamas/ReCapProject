@@ -1,5 +1,6 @@
 ﻿using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,9 @@ namespace DataAccess.Concrete.InMemory
         {
             _cars = new List<Car>
             {
-                new Car{CarId=1,BrandId=1,ColorId=1,ModelYear="2010",DailyPrice=232,Description="Manuel Vites Benzin"},
-                new Car{CarId=2,BrandId=2,ColorId=2,ModelYear="2015",DailyPrice=250,Description="Manuel Vites Dizel"},
-                new Car{CarId=3,BrandId=3,ColorId=3,ModelYear="2018",DailyPrice=271,Description="Manuel Vites Benzin"}
+                new Car{CarId=1,CarName="Corsa",BrandId=1,ColorId=1,ModelYear="2010",DailyPrice=232,Description="Manuel Vites Benzin"},
+                new Car{CarId=2,CarName="208",BrandId=2,ColorId=2,ModelYear="2015",DailyPrice=250,Description="Manuel Vites Dizel"},
+                new Car{CarId=3,CarName="Symbol",BrandId=3,ColorId=3,ModelYear="2018",DailyPrice=271,Description="Manuel Vites Benzin"}
             };
         }
 
@@ -38,6 +39,11 @@ namespace DataAccess.Concrete.InMemory
         }
 
         public List<Car> GetAll(Expression<Func<Car, bool>> filter = null)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<CarDetailDto> GetCarDetails()
         {
             throw new NotImplementedException();
         }
