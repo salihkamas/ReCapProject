@@ -8,10 +8,10 @@
 ## Layers
 ### 1. Entities
 + Entities Katmanında proje boyunca kullanacağımız nesneler bulunuyor.Şimdilik Car,Color ve Brand nesneleri bulunmaktadır.
-        1. **Abstract**
-        2. **Concrete**
-            1. Car.cs
-            2. Color.cs
-            3. Brand.cs
+#### Abstract
+#### Concrete
+1. [Car.cs](https://github.com/salihkamas/ReCapProject/blob/master/Entities/Concrete/Car.cs)
+2. [Color.cs]([Car.cs] (https://github.com/salihkamas/ReCapProject/blob/master/Entities/Concrete/Color.cs))
+3. [Brand.cs]([Car.cs] (https://github.com/salihkamas/ReCapProject/blob/master/Entities/Concrete/Brand.cs))
 
 
