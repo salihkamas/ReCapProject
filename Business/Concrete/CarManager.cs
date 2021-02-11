@@ -1,4 +1,7 @@
 ﻿using Business.Abstract;
+using Business.Constants;
+using Core.Utilities.Results.Abstract;
+using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
 using Entities.DTOs;
@@ -17,66 +20,84 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        public void Add(Car car)
+        public IResult Add(Car car)
         {
             if (car.CarName.Length<2)
             {
-                Console.WriteLine("Araba ismi en az 2 kararkter olmalıdır");
+                return new ErrorResult(Messages.CarNameInvalid);
             }
-            else if (car.DailyPrice<=0)
+            if (car.DailyPrice<=0)
             {
-                Console.WriteLine("Arabana günlük fiyatı 0'dan büyük olmalıdır");
+                return new ErrorResult(Messages.CarDailyPriceInvalid);
             }
-            else
-            {
-                _carDal.Add(car);
-            }
+            _carDal.Add(car);
+            return new SuccessResult(Messages.SuccesAdded);
         }
 
-        public void Delete(Car car)
+        public IResult Delete(Car car)
         {
             _carDal.Delete(car);
+            return new SuccessResult(Messages.SuccesDeleted);
         }
 
-        public List<Car> GetAll()
+        public IDataResult<List<Car>> GetAll()
         {
-            return _carDal.GetAll();
+            if (DateTime.Now.Hour==21)
+            {
+                return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(), Messages.SuccesListed);
         }
 
-        public List<Car> GetByBrandId(int brandId)
+        public IDataResult<List<Car>> GetByBrandId(int brandId)
         {
-            return _carDal.GetAll(c => c.BrandId == brandId);
+            if (DateTime.Now.Hour==21)
+            {
+                return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.BrandId == brandId));
         }
 
-        public List<Car> GetByColorId(int colorId)
+        public IDataResult<List<Car>> GetByColorId(int colorId)
         {
-            return _carDal.GetAll(c => c.ColorId == colorId);
+            if (DateTime.Now.Hour == 21)
+            {
+                return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<List<Car>>(_carDal.GetAll(c => c.ColorId == colorId));
         }
 
-        public Car GetById(int carId)
+        public IDataResult<Car> GetById(int carId)
         {
-            return _carDal.Get(c => c.CarId == carId);
+            if (DateTime.Now.Hour == 21)
+            {
+                return new ErrorDataResult<Car>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<Car>(_carDal.Get(c => c.CarId == carId));
+
         }
 
-        public List<CarDetailDto> GetCarDetails()
+        public IDataResult<List<CarDetailDto>> GetCarDetails()
         {
-            return _carDal.GetCarDetails();
+            if (DateTime.Now.Hour == 21)
+            {
+                return new ErrorDataResult<List<CarDetailDto>>(Messages.MaintenanceTime);
+            }
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
         }
 
-        public void Update(Car car)
+        public IResult Update(Car car)
         {
             if (car.CarName.Length < 2)
             {
-                Console.WriteLine("Araba ismi en az 2 karakter olmalıdır");
+                return new ErrorResult(Messages.CarNameInvalid);
             }
-            else if (car.DailyPrice <= 0)
+            if (car.DailyPrice <= 0)
             {
-                Console.WriteLine("Arabana günlük fiyatı 0'dan büyük olmalıdır");
+                return new ErrorResult(Messages.CarDailyPriceInvalid);
             }
-            else
-            {
-                _carDal.Update(car);
-            }
+            _carDal.Update(car);
+            return new SuccessResult(Messages.SuccesUpdated);
         }
     }
 }

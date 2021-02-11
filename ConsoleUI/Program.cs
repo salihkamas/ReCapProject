@@ -22,9 +22,17 @@ namespace ConsoleUI
         {
             CarManager carManager = new CarManager(new EfCarDal());
             Console.WriteLine("White Cars\n----------");
-            foreach (var car in carManager.GetByColorId(1))
+            var result = carManager.GetByColorId(1);
+            if (result.Success)
             {
-                Console.WriteLine($"{car.CarName}");
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine($"{car.CarName}");
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
         }
 
@@ -32,10 +40,19 @@ namespace ConsoleUI
         {
             CarManager carManager = new CarManager(new EfCarDal());
             Console.WriteLine("Renault Cars\n------------");
-            foreach (var car in carManager.GetByBrandId(3))
+            var result = carManager.GetByBrandId(3);
+            if (result.Success)
             {
-                Console.WriteLine($"{car.CarName}");
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine($"{car.CarName}");
+                }
             }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
+
         }
 
         private static void HataDenemeIsim()
@@ -50,7 +67,15 @@ namespace ConsoleUI
                 Description = "Hata Deneme",
                 ModelYear = "2018"
             };
-            carManager.Add(car);
+            var result = carManager.Add(car);
+            if (result.Success)
+            {
+                Console.WriteLine(result.Message);
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
         }
 
         private static void HataDenemeFiyat()
@@ -65,32 +90,58 @@ namespace ConsoleUI
                 Description = "Hata Deneme",
                 ModelYear = "2018"
             };
-            carManager.Add(car);
+            var result = carManager.Add(car);
+            if (result.Success)
+            {
+                Console.WriteLine(result.Message);
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
+            }
         }
 
         private static void GetByIdTest()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            Console.WriteLine(carManager.GetById(1).CarName);
+            var result = carManager.GetById(1);
+            Console.WriteLine(result.Data.CarName);
         }
 
         private static void GetAllTest()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var car in carManager.GetAll())
+            var result = carManager.GetAll();
+            if (result.Success)
             {
-                Console.WriteLine($"{car.CarId} {car.CarName} {car.BrandId} {car.ColorId} {car.DailyPrice} {car.Description}");
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine($"{car.CarId} {car.CarName} {car.BrandId} {car.ColorId} {car.DailyPrice} {car.Description}");
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
         }
 
         private static void GetCarDetailsTest()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            Console.WriteLine("Name                 Brand      Color      DailyPrice");
-            Console.WriteLine("----                 -----      -----      ----------");
-            foreach (var car in carManager.GetCarDetails())
+
+            var result = carManager.GetCarDetails();
+            if (result.Success)
             {
-                Console.WriteLine($"{car.CarName} {car.BrandName} {car.ColorName} {car.DailyPrice}TL");
+                Console.WriteLine("Name                 Brand      Color      DailyPrice");
+                Console.WriteLine("----                 -----      -----      ----------");
+                foreach (var car in result.Data)
+                {
+                    Console.WriteLine($"{car.CarName} {car.BrandName} {car.ColorName} {car.DailyPrice}TL");
+                }
+            }
+            else
+            {
+                Console.WriteLine(result.Message);
             }
         }
     }
