@@ -66,6 +66,8 @@
 + [CustomerManager.cs](https://github.com/salihkamas/ReCapProject/blob/master/Business/Concrete/CustomerManager.cs)
 + [RentalManager.cs](https://github.com/salihkamas/ReCapProject/blob/master/Business/Concrete/RentalManager.cs)
 + [UserManager.cs](https://github.com/salihkamas/ReCapProject/blob/master/Business/Concrete/UserManager.cs)
+#### Constants
++ [Messages.cs](https://github.com/salihkamas/ReCapProject/blob/master/Business/Constants/Messages.cs)
 ---
 ## Core
 + Core katmanında projedeki ortak kodlar bulunmaktadır. DataAcces katmanıyla ilgili nesneler DataAccess klasöründe, Entities ile ilgili olanlar is Entities klasöründe bulunmaktadır.
