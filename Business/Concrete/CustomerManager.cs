@@ -32,10 +32,6 @@ namespace Business.Concrete
 
         public IDataResult<List<Customer>> GetAll()
         {
-            if (DateTime.Now.Hour==21)
-            {
-                return new ErrorDataResult<List<Customer>>(Messages.MaintenanceTime);
-            }
             return new SuccessDataResult<List<Customer>>(_customerDal.GetAll(), Messages.SuccesListed);
         }
 

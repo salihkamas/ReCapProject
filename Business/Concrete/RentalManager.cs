@@ -20,6 +20,10 @@ namespace Business.Concrete
 
         public IResult Add(Rental rental)
         {
+            if (_rentalDal.GetAll(r => r.CarId == rental.CarId && r.ReturnDate == null).Count>0)
+            {
+                return new ErrorResult(Messages.ErrorAdded);
+            }
             _rentalDal.Add(rental);
             return new SuccessResult(Messages.SuccesAdded);
         }
@@ -32,10 +36,6 @@ namespace Business.Concrete
 
         public IDataResult<List<Rental>> GetAll()
         {
-            if (DateTime.Now.Hour==21)
-            {
-                return new ErrorDataResult<List<Rental>>(Messages.MaintenanceTime);
-            }
             return new SuccessDataResult<List<Rental>>(_rentalDal.GetAll(), Messages.SuccesListed);
         }
 

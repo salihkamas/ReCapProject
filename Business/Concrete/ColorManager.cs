@@ -33,10 +33,6 @@ namespace Business.Concrete
 
         public IDataResult<List<Color>> GetAll()
         {
-            if (DateTime.Now.Hour==21)
-            {
-                return new ErrorDataResult<List<Color>>(Messages.MaintenanceTime);
-            }
             return new SuccessDataResult<List<Color>>(_colorDal.GetAll(), Messages.SuccesListed);
         }
 

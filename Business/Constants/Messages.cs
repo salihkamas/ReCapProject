@@ -13,5 +13,6 @@ namespace Business.Constants
         internal static string CarDailyPriceInvalid="Car daily price is invalid";
         internal static string SuccesDeleted = "Successfully Deleted";
         internal static string SuccesAdded = "Successfully Added";
+        internal static string ErrorAdded="Adding Failed";
     }
 }
