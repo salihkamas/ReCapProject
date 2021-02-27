@@ -7,10 +7,11 @@
 
 + ##### Katmanlı Mimari ile oluşturulmuş, içerisinde Entities, DataAccess, Business, ConsoleUI, Core katmanlarını bulunduran gelişim sürecinde bir araba kiralama projesidir.
 
-# 15.02 Changes
+# 20.02 Changes
 ---
-+ WebAPI Katmanı eklendi
-+ Tüm nesneler için API yazıldı
++ Autofac desteği eklendi.
++ FluentValidation desteği eklendi.
++ AOP desteği eklendi.
 
 # Layers
 ---
@@ -139,7 +140,11 @@
 ---
 # Installations
 ---
-+ EntityFrameworkCore.SqlServer 3.1.11
++ EntityFrameworkCore.SqlServer v3.1.11
++ Autofac v6.1.0
++ Autofac.Extensions.DependencyInjection v7.1.0
++ Autofac.Extras.DynamicProxy v6.0.0
++ FluentValidation v9.5.1
 ---
 # ScreenShots
 ---
