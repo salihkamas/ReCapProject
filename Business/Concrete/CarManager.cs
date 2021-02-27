@@ -62,16 +62,10 @@ namespace Business.Concrete
             return new SuccessDataResult<List<CarDetailDto>>(_carDal.GetCarDetails());
         }
 
+        [ValidationAspect(typeof(CarValidator))]
         public IResult Update(Car car)
         {
-            if (car.CarName.Length < 2)
-            {
-                return new ErrorResult(Messages.CarNameInvalid);
-            }
-            if (car.DailyPrice <= 0)
-            {
-                return new ErrorResult(Messages.CarDailyPriceInvalid);
-            }
+
             _carDal.Update(car);
             return new SuccessResult(Messages.SuccesUpdated);
         }
