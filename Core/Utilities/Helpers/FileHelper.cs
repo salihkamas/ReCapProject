@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Core.Utilities.Results.Abstract;
+using Core.Utilities.Results.Concrete;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,45 +10,72 @@ namespace Core.Utilities.Helpers
 {
     public class FileHelper
     {
-        public static string newPath(IFormFile formFile)
+        public static string Add(IFormFile file)
         {
-            FileInfo fileInfo = new FileInfo(formFile.FileName);
-            string fileExtension = fileInfo.Extension;
-            var newPath = Guid.NewGuid().ToString() + "-" + DateTime.Now.Month + "-" + DateTime.Now.Day + "-" + DateTime.Now.Year + fileExtension;
-            string path = Environment.CurrentDirectory + @"\Images\carImages";
+            var result = newPath(file);
+            try
+            {
+                var sourcePath = Path.GetTempFileName();
+                if (file.Length > 0)
+                    using (var stream = new FileStream(sourcePath, FileMode.Create))
+                        file.CopyTo(stream);
+                File.Move(sourcePath, result.newPath);
+            }
+            catch (Exception exception)
+            {
+                return exception.Message;
+            }
+            return result.Path2;
+        }
+
+        public static string Update(string sourcePath, IFormFile file)
+        {
+            var result = newPath(file);
+            try
+            {
+                if (sourcePath.Length > 0)
+                {
+                    using (var stream = new FileStream(result.newPath, FileMode.Create))
+                    {
+                        file.CopyTo(stream);
+                    }
+                }
+                File.Delete(sourcePath);
+            }
+            catch (Exception exception)
+            {
+                return exception.Message;
+            }
+            return result.Path2;
+        }
+
+        public static IResult Delete(string path)
+        {
+            try
+            {
+                File.Delete(path);
+            }
+            catch (Exception exception)
+            {
+                return new ErrorResult(exception.Message);
+            }
+
+            return new SuccessResult();
+        }
+
+        public static (string newPath, string Path2) newPath(IFormFile file)
+        {
+            FileInfo ff = new FileInfo(file.FileName);
+            string fileExtension = ff.Extension;
+
+            var newPath = Guid.NewGuid() + fileExtension;
+
+
+            string path = Environment.CurrentDirectory + @"\wwwroot\uploads";
+
             string result = $@"{path}\{newPath}";
-            return result;
-        }
-        public static string Add(IFormFile formFile)
-        {
-            var sourcepath = Path.GetTempFileName();
-            if (formFile.Length > 0)
-            {
-                using (var stream = new FileStream(sourcepath, FileMode.Create))
-                {
-                    formFile.CopyTo(stream);
-                }
-            }
-            var result = newPath(formFile);
-            File.Move(sourcepath, result);
-            return result;
-        }
-        public static string Update(string sourcepath, IFormFile formFile)
-        {
-            var result = newPath(formFile);
-            if (sourcepath.Length>0)
-            {
-                using (var stream = new FileStream(result,FileMode.Create))
-                {
-                    formFile.CopyTo(stream);
-                }
-            }
-            File.Delete(sourcepath);
-            return result;
-        }
-        public static void Delete(string path)
-        {
-            File.Delete(path);
+
+            return (result, $"\\uploads\\{newPath}");
         }
     }
 }
