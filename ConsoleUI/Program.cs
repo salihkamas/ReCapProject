@@ -129,7 +129,7 @@ namespace ConsoleUI
         {
             CarManager carManager = new CarManager(new EfCarDal());
 
-            var result = carManager.GetCarDetails();
+            var result = carManager.GetCarsDetails();
             if (result.Success)
             {
                 Console.WriteLine("Name                 Brand      Color      DailyPrice");
