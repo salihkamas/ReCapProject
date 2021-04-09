@@ -22,7 +22,7 @@ namespace DataAccess.Concrete.EntityFramework
                              on c.BrandId equals b.BrandId
                              join clr in context.Colors
                              on c.ColorId equals clr.ColorId
-                             select new CarDetailDto { CarId = c.CarId, BrandId = b.BrandId, ColorId = clr.ColorId, CarName = c.CarName, BrandName = b.BrandName, ColorName = clr.ColorName, DailyPrice = c.DailyPrice, Description = c.Description, Status = !context.Rentals.Any(r => r.CarId == c.CarId && r.ReturnDate == null) };
+                             select new CarDetailDto { CarId = c.CarId, BrandId = b.BrandId, ColorId = clr.ColorId, CarName = c.CarName, BrandName = b.BrandName, ColorName = clr.ColorName, DailyPrice = c.DailyPrice, Description = c.Description, Status = !context.Rentals.Any(r => r.CarId == c.CarId && r.ReturnDate == null), FindexPoint = c.FindexPoint };
                 return filter == null
                     ? result.ToList()
                     : result.Where(filter).ToList();
@@ -39,7 +39,7 @@ namespace DataAccess.Concrete.EntityFramework
                              on c.BrandId equals b.BrandId
                              join clr in context.Colors
                              on c.ColorId equals clr.ColorId
-                             select new CarDetailDto { CarId = c.CarId, BrandId = b.BrandId, ColorId = clr.ColorId, CarName = c.CarName, BrandName = b.BrandName, ColorName = clr.ColorName, DailyPrice = c.DailyPrice, Description = c.Description , Status = !context.Rentals.Any(r => r.CarId == c.CarId && r.ReturnDate == null)};
+                             select new CarDetailDto { CarId = c.CarId, BrandId = b.BrandId, ColorId = clr.ColorId, CarName = c.CarName, BrandName = b.BrandName, ColorName = clr.ColorName, DailyPrice = c.DailyPrice, Description = c.Description, Status = !context.Rentals.Any(r => r.CarId == c.CarId && r.ReturnDate == null) };
                 return result.SingleOrDefault();
 
             }

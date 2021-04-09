@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Utilities.Business;
 using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
@@ -14,19 +15,25 @@ namespace Business.Concrete
     public class RentalManager : IRentalService
     {
         IRentalDal _rentalDal;
-        public RentalManager(IRentalDal rentalDal)
+        ICustomerDal _customerDal;
+        ICarDal _carDal;
+        public RentalManager(IRentalDal rentalDal, ICustomerDal customerDal, ICarDal carDal)
         {
             _rentalDal = rentalDal;
+            _customerDal = customerDal;
+            _carDal = carDal;
         }
 
         public IResult Add(Rental rental)
         {
-            if (_rentalDal.GetAll(r => r.CarId == rental.CarId && r.ReturnDate == null).Count>0)
+            var result = BusinessRules.Run(CheckCarAvailable(rental), CheckFindexPoint(rental.CustomerId, rental.CarId));
+            if (result != null)
             {
-                return new ErrorResult(Messages.ErrorAdded);
+                return result;
             }
+
             _rentalDal.Add(rental);
-            return new SuccessResult(Messages.SuccesAdded);
+            return new SuccessResult();
         }
 
         public IResult Delete(Rental rental)
@@ -65,5 +72,29 @@ namespace Business.Concrete
             _rentalDal.Update(rental);
             return new SuccessResult(Messages.SuccesUpdated);
         }
+        private IResult CheckCarAvailable(Rental rental)
+        {
+            var result = _rentalDal.Get(r => (r.CarId == rental.CarId && r.ReturnDate == null));
+
+            if (result != null)
+            {
+                return new ErrorResult(Messages.RentalError);
+
+            }
+            return new SuccessResult();
+        }
+
+        private IResult CheckFindexPoint(int customerId, int carId)
+        {
+            var car = _carDal.Get(c => c.CarId == carId);
+            var customer = _customerDal.Get(c => c.CustomerId == customerId);
+
+            if (customer.FindexPoint >= car.FindexPoint)
+            {
+                return new SuccessResult();
+            }
+            return new ErrorResult(Messages.FindexPointNotEnough);
+        }
     }
+
 }

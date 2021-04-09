@@ -23,5 +23,7 @@ namespace Business.Constants
         public static string UserAlreadyExists = "User already exists";
         public static string AccessTokenCreated = "Acces token created";
         public static string AuthorizationDenied = "Authorization Denied";
+        internal static string RentalError;
+        internal static string FindexPointNotEnough;
     }
 }
